@@ -1,64 +1,22 @@
-import {Component} from 'react'
+import FaqItem from '../FaqItem'
 
 import './index.css'
 
-const PLUS_IMAGE =
-'https://assets.ccbp.in/frontend/react-js/faqs-plus-icon-img.png'
-const MINUS_IMAGE =
-'https://assets.ccbp.in/frontend/react-js/faqs-minus-icon-img.png'
+const Faqs = props => {
+  const {faqsList} = props
 
-class FaqItem extends Component {
-    state = {
-        isActive: false,
-    }
-
-    renderAnswer = () => {
-        const {faqDetails} = this.props
-        const {answerText} = faqDetails
-        const {isActive} = this.state 
-
-        if(isActive) {
-            return (
-                <div>
-                    <hr className="horizontal-line" />
-                    <p className="answer">{answerText}</p>
-                </div>
-            )
-        }
-        return null
-    }
-    onToggleIsActive = () => {
-        this.setState(prevState => ({
-            isActive: !prevState.isActive,
-        }))
-    }
-    renderActiveImage = () => {
-        const {isActive} = this.state
-        const image = isActive ? MINUS_IMAGE : PLUS_IMAGE
-        const altText = isActive ? 'minus' : 'plus '
-
-        return (
-            <button
-            className="button" type="button" onClick={this.onToggleIsActive}>
-            <img className="image" src={image} alt={altText} />
-
-            </button>
-        )
-    }
-    render() {
-        const {faqDetails} = this.props 
-        const {questionText} = faqDetails
-
-        return (
-            <li className="faq-item">
-                <div className="question-container">
-                 <h1 className"question">{questionText}</h1>
-                 {this.renderActiveImage()}
-                </div>
-                {this.renderAnswer()}
-            </li>
-        )
-    }
+  return (
+    <div className="app-container">
+      <div className="faqs-container">
+        <h1 className="heading">FAQS</h1>
+        <ul className="faqs-list">
+          {faqsList.map(eachFaq => (
+            <FaqItem key={eachFaq.id} faqDetails={eachFaq} />
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
 }
 
-export default FaqItem
+export default Faqs
